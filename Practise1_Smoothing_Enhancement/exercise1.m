@@ -1,0 +1,22 @@
+im = imread('rice.tif');
+figure(1);
+subplot(2, 4, 1);
+imshow(im);
+subplot(2, 4, 2);
+imhist(im);
+im1 = imadjust(im, [0.156, 0.863], [0, 1]);
+subplot(2, 4, 3);
+imshow(im1);
+subplot(2, 4, 4);
+imhist(im1);
+subplot(2, 4, 5);
+im2 = histeq(im);
+imshow(im2);
+subplot(2, 4, 6);
+imhist(im2);
+im_aux = imread('lily.tif');
+im3 = histeq(im, imhist(im_aux)); 
+subplot(2, 4, 7);
+imshow(im3);
+subplot(2, 4, 8);
+imhist(im3);clec
