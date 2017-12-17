@@ -30,7 +30,6 @@ for c = 1: 3
    scatter(momentos(:, 1), momentos(:, 2), symbols(c), colors(c));
    scatter(centroides(1), centroides(2), 's', 'r');
 end
-hold off;
 
 disp("Classifying some bottles...");
 
@@ -38,7 +37,14 @@ for c = 1:3
     for i = 11: 15
         name = strcat(strcat('botella_', categories(c), '_', int2str(i)), '.bmp');
         im = imread(name);
-        disp(strcat("Bottle ", name,  " belongs to: ", categories(belonging_class(im))));
+        mhu = momentos_Hu(im);
+        x = belonging_class(im);
+        disp(strcat("Bottle ", name,  " belongs to: ", categories(x)));
+        point = plot(mhu(1), mhu(2), 'cd');
+        tag = text(mhu(1) + 0.005, mhu(2) + 0.005, ['Classified as: ' categories(x)]);
+        pause();
+        delete(point);
+        delete(tag);
     end
 end
 
