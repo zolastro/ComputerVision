@@ -1,4 +1,4 @@
-<pre><div class="text_to_html">function h=error_ellipse(varargin)
+function h=error_ellipse(varargin)
 % ERROR_ELLIPSE - plot an error ellipse, or ellipsoid, defining confidence region
 %    ERROR_ELLIPSE(C22) - Given a 2x2 covariance matrix, plot the
 %    associated error ellipse, at the origin. It returns a graphics handle
@@ -96,7 +96,6 @@ hold_state = get(gca,'nextplot');
 
 if r==3 & c==3
   z0=mu(3);
-  
   % Make the matrix has positive eigenvalues - else it's not a valid covariance matrix!
   if any(eig(C) <=0)
     error('The covariance matrix must be positive definite (it has non-positive eigenvalues)')
@@ -129,13 +128,14 @@ if r==3 & c==3
   colormap gray
   alpha(0.3)
   camlight
-  if argout
+  if nargout
     h=[h1 h2 h3 h4];
   end
 elseif r==2 & c==2
   % Make the matrix has positive eigenvalues - else it's not a valid covariance matrix!
+  eig(C)
   if any(eig(C) <=0)
-    error('The covariance matrix must be positive definite (it has non-positive eigenvalues)')
+      error('The covariance matrix must be positive definite (it has non-positive eigenvalues)')
   end
 
   [x,y,z] = getpoints(C,prop.clip,NUM_POINTS_ELLIPSE);
@@ -282,4 +282,3 @@ end
 if ~isempty(TargetField)
   error('Property names and values must be specified in pairs.');
 end
-</div></pre>
