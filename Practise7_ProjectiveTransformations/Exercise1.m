@@ -1,4 +1,4 @@
-path = input('Introduce the name of the image: ');
+path = 'bernabeu.jpg';
 im = imread(path);
 im = rgb2gray(im);
 im = im2double(im);

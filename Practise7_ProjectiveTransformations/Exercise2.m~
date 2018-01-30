@@ -1,0 +1,38 @@
+img = imread('bernabeu.jpg'); 
+img = rgb2gray(img);
+figure(1);
+imshow(img);
+
+points = [0 0 0 0; 0 0 0 0; 1 1 1 1];
+[x,y] = ginput(4);
+hold off;
+
+scaleFactor = 5;
+width = 69*scaleFactor;
+height = 105*scaleFactor;
+H = homography2d(points, [width width 1 1; height 1 1 height; 1 1 1 1]);
+tf = maketform('projective',H');
+inv_tf = fliptform(tf);
+
+projection = imread('bob_esponja.jpg');
+projection = rgb2gray(projection);
+
+imgTransformed = imtransform(img, tf, 'XData', [1 width], 'YData', [1 height]);
+projection = imresize(projection,[size(imgTransformed, 1) size(imgTransformed, 2)]);
+imgRealityTransformed = imtransform(projection, inv_tf, 'XData', [1 size(projection,2)], 'YData', [1 size(projection,1)]);
+% Taking away the black points from the image transformed
+mask = uint8(imgRealityTransformed == 0);
+for i = 1:size(imgRealityTransformed,1)
+    for j = 1:size(imgRealityTransformed,2)
+        if mask(i,j) == 1
+            imgRealityTransformed(i,j) = img(i,j);
+        end
+    end
+end
+% Showing the image with the augmented reality
+figure(2);
+imshow(img);
+hold on;
+imshow(imgRealityTransformed);
+title('Image with augmented reality');
+hold off;
