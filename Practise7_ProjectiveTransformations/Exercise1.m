@@ -7,7 +7,7 @@ p = ginput(4);
 p_h = [p ones(4, 1)]';
 disp(p_h);
 
-scale = 1;
+scale = 5;
 
 width = 69 * scale;
 height = 105 * scale;

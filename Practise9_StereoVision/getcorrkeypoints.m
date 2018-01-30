@@ -1,5 +1,5 @@
 
-function [x1, x2] = plot_harris(im_name_1, im_name_2)
+function [x1, x2] = getcorrkeypoints(im_name_1, im_name_2)
     % We load the images
     im1 = imread(im_name_1);
     im2 = imread(im_name_2);
@@ -8,11 +8,11 @@ function [x1, x2] = plot_harris(im_name_1, im_name_2)
     % Store the relevant keypoints
     [~, r1, c1] = harris(im1, 2, 1000, 10, 0); 
     [~, r2, c2] = harris(im2, 2, 1000, 10, 0); 
-    
+    x1 = [];
+    x2 = [];
     % Set a window size
     win_size = 15;
     
-    figure(1) 
     for i = 1:size(r1, 1)
                 % Crop section
                 sect = imcrop(im1, [(c1(i)-win_size) (r1(i)-win_size) win_size*2 win_size*2]);
