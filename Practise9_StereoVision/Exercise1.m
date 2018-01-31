@@ -5,25 +5,26 @@ f = mean(cameraParams.FocalLength);
 b = 0.10;
 imL = imread('photo_left.jpeg');
 imR = imread('photo_right.jpeg');
-%%[x1 x2] = getcorrkeypoints('photo_left.jpeg', 'photo_right.jpeg');
+%Comment if already in path, otherwise it might take a while...
+%[x1 x2] = getcorrkeypoints(imL, imR, 0.9);
 [F, inliers] = ransacfitfundmatrix(x1, x2,1e-5);
 X = [];
 Y = [];
 Z = [];
 b = 0.10;
-% for i = 1: size(x1, 2)
-%    d = x1(1, i) - x2(1, i);
-%    x = b * (x1(1, i) - cx)/d;
-%    y = b * (x1(2, i) - cy)/d;
-%    z = f * b / d;
-%    X = [X x];
-%    Y = [Y y];
-%    Z = [Z z];
-% end
-% 
-% patch(X, Y, Z, 'red');
+for i = 1: size(x1, 2)
+   d = x1(1, i) - x2(1, i);
+   x = b * (x1(1, i) - cx)/d;
+   y = b * (x1(2, i) - cy)/d;
+   z = f * b / d;
+   X = [X x];
+   Y = [Y y];
+   Z = [Z z];
+end
+figure(1)
+patch(X, Y, Z, 'g');
 
-figure(1);
+figure(2)
 subplot(1, 2, 1), imshow(imL);
 subplot(1, 2, 2), imshow(imR);
 but = 1;

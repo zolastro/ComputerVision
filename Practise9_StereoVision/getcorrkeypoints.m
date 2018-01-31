@@ -1,8 +1,6 @@
 
-function [x1, x2, xl, yl] = getcorrkeypoints(im_name_1, im_name_2)
+function [x1, x2, xl, yl] = getcorrkeypoints(im1, im2, threshold)
     % We load the images
-    im1 = imread(im_name_1);
-    im2 = imread(im_name_2);
     im1 = rgb2gray(im1);
     im2 = rgb2gray(im2);
     % Store the relevant keypoints
@@ -28,7 +26,7 @@ function [x1, x2, xl, yl] = getcorrkeypoints(im_name_1, im_name_2)
                     corr_vertex(j) = corr(r2(j)+xoffSet, c2(j) + yoffSet);
                 end
                 [max_value, max_index] = max(corr_vertex);
-                if(max_value > 0.85)
+                if(max_value > threshold)
                     p1 = [c1(i); r1(i)];
                     p2 = [c2(max_index); r2(max_index)];
                     x1 = [x1, p1];
