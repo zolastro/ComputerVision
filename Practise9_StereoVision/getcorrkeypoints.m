@@ -1,5 +1,5 @@
 
-function [x1, x2] = getcorrkeypoints(im_name_1, im_name_2)
+function [x1, x2, xl, yl] = getcorrkeypoints(im_name_1, im_name_2)
     % We load the images
     im1 = imread(im_name_1);
     im2 = imread(im_name_2);
@@ -10,6 +10,7 @@ function [x1, x2] = getcorrkeypoints(im_name_1, im_name_2)
     [~, r2, c2] = harris(im2, 2, 1000, 10, 0); 
     x1 = [];
     x2 = [];
+   
     % Set a window size
     win_size = 15;
     
@@ -27,11 +28,11 @@ function [x1, x2] = getcorrkeypoints(im_name_1, im_name_2)
                     corr_vertex(j) = corr(r2(j)+xoffSet, c2(j) + yoffSet);
                 end
                 [max_value, max_index] = max(corr_vertex);
-                if(max_value > 0.8)
+                if(max_value > 0.85)
                     p1 = [c1(i); r1(i)];
                     p2 = [c2(max_index); r2(max_index)];
                     x1 = [x1, p1];
                     x2 = [x2, p2];
-                    end                
+                end                
     end
 end
