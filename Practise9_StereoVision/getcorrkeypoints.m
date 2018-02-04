@@ -1,8 +1,10 @@
 
-function [x1, x2, xl, yl] = getcorrkeypoints(im1, im2, threshold)
+function [x1, x2, xl, yl] = getcorrkeypoints(im1, im2, threshold, win_size)
     % We load the images
-    im1 = rgb2gray(im1);
-    im2 = rgb2gray(im2);
+    if size(im1, 1) == 3
+        im1 = rgb2gray(im1);
+        im2 = rgb2gray(im2);
+    end
     % Store the relevant keypoints
     [~, r1, c1] = harris(im1, 2, 1000, 10, 0); 
     [~, r2, c2] = harris(im2, 2, 1000, 10, 0); 
@@ -10,7 +12,6 @@ function [x1, x2, xl, yl] = getcorrkeypoints(im1, im2, threshold)
     x2 = [];
    
     % Set a window size
-    win_size = 15;
     
     for i = 1:size(r1, 1)
                 % Crop section
